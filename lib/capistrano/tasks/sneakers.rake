@@ -73,7 +73,7 @@ namespace :sneakers do
   desc 'Start sneakers'
   task :start do
     on roles fetch(:sneakers_roles) do |role|
-      switch_user(role) do
+      sneakers_switch_user(role) do
         check_interval = 0.5
 
         each_process_with_index do |pid_file, idx|
