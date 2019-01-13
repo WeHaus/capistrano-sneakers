@@ -95,20 +95,20 @@ namespace :sneakers do
 
     def sneakers_template(name, role)
       local_template_directory = fetch(:sneakers_monit_templates_path)
+      search_paths = ["#{local_template_directory}/#{name}.erb"]
+#      search_paths = [
+#        "#{name}-#{role.hostname}-#{fetch(:stage)}.erb",
+#        "#{name}-#{role.hostname}.erb",
+#        "#{name}-#{fetch(:stage)}.erb",
+#        "#{name}.erb"
+#      ].map { |filename| File.join(local_template_directory, filename) }
 
-      search_paths = [
-        "#{name}-#{role.hostname}-#{fetch(:stage)}.erb",
-        "#{name}-#{role.hostname}.erb",
-        "#{name}-#{fetch(:stage)}.erb",
-        "#{name}.erb"
-      ].map { |filename| File.join(local_template_directory, filename) }
+#      global_search_path = File.expand_path(
+#        File.join(*%w[.. .. .. generators capistrano sneakers monit templates], "#{name}.conf.erb"),
+#        __FILE__
+#      )
 
-      global_search_path = File.expand_path(
-        File.join(*%w[.. .. .. generators capistrano sneakers monit templates], "#{name}.conf.erb"),
-        __FILE__
-      )
-
-      search_paths << global_search_path
+#      search_paths << global_search_path
 
       template_path = search_paths.detect { |path| File.file?(path) }
       File.read(template_path)
